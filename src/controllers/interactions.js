@@ -3,7 +3,7 @@ const pool = require("../db");
 
 class InteractionsController {
 
-  async getInteractions(req, res) {
+  async getInteractions(req, response) {
     try {
       const data = await pool.query('SELECT * FROM interaccion;', function (e, res) {
         if (e) throw e;
@@ -16,7 +16,7 @@ class InteractionsController {
     }
   }
 
-  async getInteraction(req, res) {
+  async getInteraction(req, response) {
     try {
       const { id } = req.params;
       const data = await pool.query('SELECT * FROM intreraccion WHERE id = $1;', [id], function (e, res) {
@@ -30,7 +30,7 @@ class InteractionsController {
     }
   }
 
-  async getInteractionsFromTeacherId(req, res) {
+  async getInteractionsFromTeacherId(req, response) {
     try {
       const { id } = req.params;
       const data = await pool.query('SELECT * FROM intreraccion WHERE cedula_profesor = $1;', [id], function (e, res) {
@@ -44,7 +44,21 @@ class InteractionsController {
     }
   }
 
-  async createInteraction(req, res) {
+  async getInteractionsFromDelegadoId(req, response) {
+    try {
+      const { id } = req.params;
+      const data = await pool.query('SELECT * FROM intreraccion WHERE cedula_delegado = $1;', [id], function (e, res) {
+        if (e) throw e;
+        console.log(res.rows);
+        return res.rows;
+      });
+      response.status(200).json(data)
+    } catch (e) {
+      response.status(400).json(e)
+    }
+  }
+
+  async createInteraction(req, response) {
     try {
       const {
         cedulaDelegado,
@@ -88,7 +102,7 @@ class InteractionsController {
   }
 
 
-  async updateInteraction(req, res) {
+  async updateInteraction(req, response) {
     try {
       const { id } = req.params;
       const {
@@ -132,7 +146,7 @@ class InteractionsController {
     }
   }
 
-  async deleteInteraction(req, res) {
+  async deleteInteraction(req, response) {
     try {
       const { id } = req.params;
       const data = await pool.query('DELETE FROM interaccion WHERE id = $1;', [id], function (e, res) {
