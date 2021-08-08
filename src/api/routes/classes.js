@@ -15,6 +15,10 @@ router.get("/class", ClassesController.getClasses);
 
 router.get("/class/:id", ClassesController.getClass);
 
+// Obtener materias de un usuario 
+
+router.get("/classes/user/:id", ClassesController.getClassesFromUserId);
+
 // Actualizar materia  
 
 router.put("/class/:id", ClassesController.updateClass);
