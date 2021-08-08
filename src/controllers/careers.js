@@ -5,12 +5,12 @@ class CareerController {
 
   async getCareers(req, response) {
     try {
-      const data = await pool.query('SELECT * FROM carrera;', function (e, res) {
+      await pool.query('SELECT * FROM carrera;', function (e, res) {
         if (e) throw e;
-        console.log(res);
+        console.log(res.rows);
+        response.status(200).json(res.rows)
         return res.rows;
       });
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -19,12 +19,11 @@ class CareerController {
   async getCareer(req, response) {
     try {
       const { id } = req.params;
-      const data = await pool.query('SELECT * FROM carrera WHERE id = $1;', [id], function (e, res) {
+      await pool.query('SELECT * FROM carrera WHERE id = $1;', [id], function (e, res) {
         if (e) throw e;
         console.log(res);
-        return res.rows;
+        response.status(200).json(res.rows[0])
       });
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -39,10 +38,9 @@ class CareerController {
         [nombreCarrera],
         function (e, res) {
           if (e) throw e;
-          console.log('Se insertaron ' + res.affectedRows + ' campos');
-          return res;
+          console.log('Se insertaron ' + res.rows + ' campos');
+          response.status(200).json('Se inserto una carrera')
         });
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -55,14 +53,14 @@ class CareerController {
       const {
         nombreCarrera
       } = req.body;
-      const data = await pool.query('UPDATE carrera SET nombre_carrera=$1 WHERE id=$2',
+      await pool.query('UPDATE carrera SET nombre_carrera=$1 WHERE id=$2',
         [nombreCarrera, id],
         function (e, res) {
           if (e) throw e;
           console.log('Carrera actualizada');
+          response.status(200).json('Se actualizo una carrera campos')
           return res;
         });
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -74,9 +72,9 @@ class CareerController {
       const data = await pool.query('DELETE FROM carrera WHERE id = $1;', [id], function (e, res) {
         if (e) throw e;
         console.log(res);
+        response.status(200).json('Borrado con exito')
         return res;
       });
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
