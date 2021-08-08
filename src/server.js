@@ -1,14 +1,15 @@
-import express from "express";
-import dotenv from "dotenv";
-import http from "http";
-import morgan from "morgan";
-import cors from "cors";
-import compression from "compression";
-import "core-js/stable";
-import "regenerator-runtime/runtime";
-import logColors from "./utils/logColors";
+const express = require("express");
+const dotenv = require("dotenv");
+const http = require("http");
+const morgan = require("morgan");
+const cors = require("cors");
+require("core-js/stable");
+require("regenerator-runtime/runtime");
+
+const api = require("./api");
 
 // Import all endpoint routes 
+const { Careers, Classes, Interactions, Users } = api;
 
 // Startup
 const app = express();
@@ -20,21 +21,21 @@ app.use(express.json());
 
 const port = process.env.PORT || 3000;
 
-if (app.get("env") === "production") {
-  app.use(compression());
-  app.use(morgan("common"));
-} else {
-  app.use(morgan("dev"));
-}
+app.use(morgan("dev"));
+
+app.use(Careers);
+app.use(Classes);
+app.use(Interactions);
+app.use(Users);
 
 const server = http.createServer(app);
 
 server.listen(port, (err) => {
   if (err) throw err;
-  console.log(logColors.greenFont + "[node] Server started at " + port);
+  console.log("[node] Server started at ");
 });
 
 server.on("close", () => {
-  console.log(logColors.redFont + "[node] Server stopped", logColors.whiteFont);
+  console.log("[node] Server stopped");
   process.exit(1);
 });
