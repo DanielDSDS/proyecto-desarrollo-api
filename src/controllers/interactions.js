@@ -7,16 +7,16 @@ class InteractionsController {
     pool.query('SELECT * FROM interaccion;', function (e, res) {
       if (e) throw e;
       console.log(res);
-      return res;
+      return res.rows;
     });
   }
 
   async getInteraction(req, res) {
     const { id } = req.params;
-    pool.query('SELECT * FROM intreraccion WHERE id = ?;', [id], function (e, res) {
+    pool.query('SELECT * FROM intreraccion WHERE id = $1;', [id], function (e, res) {
       if (e) throw e;
       console.log(res);
-      return res;
+      return res.rows;
     });
   }
 
@@ -36,9 +36,8 @@ class InteractionsController {
       descripcionIncidencia,
       estado,
     } = req.body;
-    pool.query('INSERT INTO interaccion (id, cedula_delegado, cedula_profesor, NRC, nombre_materia, tipo, hora_inicio, hora_fin, asistencia, observaciones_profesor, observaciones_delegado, nivel_incidencia, descripcion_incidencia, estado ) VALUES ?;',
+    pool.query('INSERT INTO interaccion (id, cedula_delegado, cedula_profesor, NRC, nombre_materia, tipo, hora_inicio, hora_fin, asistencia, observaciones_profesor, observaciones_delegado, nivel_incidencia, descripcion_incidencia, estado ) VALUES (DEFAULT, $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13);',
       [
-        'DEFAULT',
         cedulaDelegado,
         cedulaProfesor,
         nrc,
@@ -77,7 +76,7 @@ class InteractionsController {
       descripcionIncidencia,
       estado,
     } = req.body;
-    pool.query('UPDATE interaccion SET cedula_delegado=?, cedula_profesor=?, NRC=?, nombre_materia=?, tipo=?, hora_inicio=?, hora_fin=?, asistencia=?, observaciones_profesor=?, observaciones_delegado=?, nivel_incidencia=?, descripcion_incidencia=?, estado=? WHERE id = ?;',
+    pool.query('UPDATE interaccion SET cedula_delegado=$1, cedula_profesor=$2, NRC=$3, nombre_materia=$4, tipo=$5, hora_inicio=$6, hora_fin=$7, asistencia=$8, observaciones_profesor=$9, observaciones_delegado=$10, nivel_incidencia=$11, descripcion_incidencia=$12, estado=$13 WHERE id = $14;',
       [cedulaDelegado,
         cedulaProfesor,
         nrc,
@@ -101,7 +100,7 @@ class InteractionsController {
 
   async deleteInteraction(req, res) {
     const { id } = req.params;
-    pool.query('DELETE FROM interaccion WHERE id = ?;', [id], function (e, res) {
+    pool.query('DELETE FROM interaccion WHERE id = $1;', [id], function (e, res) {
       if (e) throw e;
       console.log(res);
       return res;

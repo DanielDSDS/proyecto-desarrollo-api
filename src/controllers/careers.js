@@ -7,16 +7,16 @@ class CareerController {
     pool.query('SELECT * FROM carrera;', function (e, res) {
       if (e) throw e;
       console.log(res);
-      return res;
+      return res.rows;
     });
   }
 
   async getCareer(req, res) {
     const { id } = req.params;
-    pool.query('SELECT * FROM carrera WHERE id = ?;', [id], function (e, res) {
+    pool.query('SELECT * FROM carrera WHERE id = $1;', [id], function (e, res) {
       if (e) throw e;
       console.log(res);
-      return res;
+      return res.rows;
     });
   }
 
@@ -24,7 +24,7 @@ class CareerController {
     const {
       nombreCarrera
     } = req.body;
-    pool.query('INSERT INTO carrera (id, nombre_carrera) VALUES ?;',
+    pool.query('INSERT INTO carrera (id, nombre_carrera) VALUES($1,$2);',
       ['DEFAULT', nombreCarrera],
       function (e, res) {
         if (e) throw e;
@@ -39,7 +39,7 @@ class CareerController {
     const {
       nombreCarrera
     } = req.body;
-    pool.query('UPDATE carrera SET nombre_carrera=? WHERE id=?',
+    pool.query('UPDATE carrera SET nombre_carrera=$1 WHERE id=$2',
       [nombreCarrera, id],
       function (e, res) {
         if (e) throw e;
@@ -50,7 +50,7 @@ class CareerController {
 
   async deleteCareer(req, res) {
     const { id } = req.params;
-    pool.query('DELETE FROM carrera WHERE id = ?;', [id], function (e, res) {
+    pool.query('DELETE FROM carrera WHERE id = $1;', [id], function (e, res) {
       if (e) throw e;
       console.log(res);
       return res;
