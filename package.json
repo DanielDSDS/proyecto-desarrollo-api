@@ -18,19 +18,29 @@
   },
   "homepage": "https://github.com/nedBigby/proyecto-desarrollo-api#readme",
   "dependencies": {
-    "@babel/cli": "^7.14.8",
-    "@babel/core": "^7.15.0",
-    "@babel/node": "^7.14.9",
+    "@babel/cli": "^7.13.10",
+    "@babel/core": "^7.13.10",
+    "@babel/node": "^7.13.10",
     "@babel/polyfill": "^7.12.1",
-    "babel": "^6.23.0",
-    "babel-node": "^0.0.1-security",
-    "babel-polyfill": "^6.26.0",
-    "core-js": "^3.16.0",
+    "babel-plugin-polyfill-corejs2": "^0.1.10",
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "core-js": "^3.9.1",
     "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
+    "dotenv": "^8.2.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
     "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
     "morgan": "^1.10.0",
-    "mysqli": "^3.1.2",
-    "nodemon": "^2.0.12"
+    "regenerator-runtime": "^0.13.7"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.12.16",
+    "babel-polyfill": "^6.26.0",
+    "eslint": "^7.21.0",
+    "nodemon": "^2.0.7"
   }
 }
