@@ -5,12 +5,10 @@ class InteractionsController {
 
   async getInteractions(req, response) {
     try {
-      const data = await pool.query('SELECT * FROM interaccion;', function (e, res) {
+      await pool.query('SELECT * FROM interaccion;', function (e, res) {
         if (e) throw e;
-        console.log(res.rows);
-        return res.rows;
+        response.status(200).json(res.rows)
       });
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -19,12 +17,11 @@ class InteractionsController {
   async getInteraction(req, response) {
     try {
       const { id } = req.params;
-      const data = await pool.query('SELECT * FROM intreraccion WHERE id = $1;', [id], function (e, res) {
+      await pool.query('SELECT * FROM intreraccion WHERE id = $1;', [id], function (e, res) {
         if (e) throw e;
-        console.log(res.rows);
+        response.status(200).json(res.rows[0])
         return res.rows;
       });
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -33,12 +30,11 @@ class InteractionsController {
   async getInteractionsFromTeacherId(req, response) {
     try {
       const { id } = req.params;
-      const data = await pool.query('SELECT * FROM intreraccion WHERE cedula_profesor = $1;', [id], function (e, res) {
+      await pool.query('SELECT * FROM intreraccion WHERE cedula_profesor = $1;', [id], function (e, res) {
         if (e) throw e;
         console.log(res.rows);
-        return res.rows;
+        response.status(200).json(res.rows)
       });
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -47,12 +43,11 @@ class InteractionsController {
   async getInteractionsFromDelegadoId(req, response) {
     try {
       const { id } = req.params;
-      const data = await pool.query('SELECT * FROM intreraccion WHERE cedula_delegado = $1;', [id], function (e, res) {
+      await pool.query('SELECT * FROM intreraccion WHERE cedula_delegado = $1;', [id], function (e, res) {
         if (e) throw e;
-        console.log(res.rows);
+        response.status(200).json(res.rows)
         return res.rows;
       });
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -75,7 +70,7 @@ class InteractionsController {
         descripcionIncidencia,
         estado,
       } = req.body;
-      const data = await pool.query('INSERT INTO interaccion (id, cedula_delegado, cedula_profesor, NRC, nombre_materia, tipo, hora_inicio, hora_fin, asistencia, observaciones_profesor, observaciones_delegado, nivel_incidencia, descripcion_incidencia, estado ) VALUES (DEFAULT, $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13);',
+      await pool.query('INSERT INTO interaccion (id, cedula_delegado, cedula_profesor, NRC, nombre_materia, tipo, hora_inicio, hora_fin, asistencia, observaciones_profesor, observaciones_delegado, nivel_incidencia, descripcion_incidencia, estado ) VALUES (DEFAULT, $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13);',
         [
           cedulaDelegado,
           cedulaProfesor,
@@ -92,10 +87,9 @@ class InteractionsController {
           estado],
         function (e, res) {
           if (e) throw e;
-          console.log('Se inserto una interaccion ');
+          response.status(200).json('Inserto una interaccion')
           return res;
         });
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -137,10 +131,9 @@ class InteractionsController {
           id],
         function (e, res) {
           if (e) throw e;
-          console.log('Se actualizo una interaccion ');
+          response.status(200).json('Se actualizo una interaccion ')
           return res;
         });
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -152,6 +145,7 @@ class InteractionsController {
       const data = await pool.query('DELETE FROM interaccion WHERE id = $1;', [id], function (e, res) {
         if (e) throw e;
         console.log(res);
+        response.status(200).json('Borro una interaccion')
         return res;
       });
       response.status(200).json(data)

@@ -46,7 +46,6 @@ class CareerController {
     }
   }
 
-
   async updateCareer(req, response) {
     try {
       const { id } = req.params;

@@ -7,10 +7,8 @@ class ClassesController {
     try {
       const data = await pool.query('SELECT * FROM materia;', function (e, res) {
         if (e) throw e;
-        console.log(res);
-        return res.rows;
+        response.status(200).json(res.rows)
       });
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -21,11 +19,8 @@ class ClassesController {
       const { id } = req.params;
       const data = await pool.query('SELECT * FROM materia WHERE NRC = $1;', [id], function (e, res) {
         if (e) throw e;
-        console.log(res);
-        return res.rows;
+        response.status(200).json(res.rows[0])
       });
-
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -45,11 +40,9 @@ class ClassesController {
           )`,
         [id], function (e, res) {
           if (e) throw e;
-          console.log(res);
-          return res.rows;
+          response.status(200).json(res.rows)
         });
 
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -69,11 +62,10 @@ class ClassesController {
         ['DEFAULT', idCarrera, nombreMateria, numInscritos, numInteracciones, cedulaProfesor, cedulaDelegado],
         function (e, res) {
           if (e) throw e;
-          console.log('Se insertaron ' + res.affectedRows + ' campos');
+          response.status(200).json('Se creo materia')
           return res;
         });
 
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -95,7 +87,7 @@ class ClassesController {
         [idCarrera, nombreMateria, numInscritos, numInteracciones, cedulaProfesor, cedulaDelegado, id],
         function (e, res) {
           if (e) throw e;
-          console.log('Materia actualizada');
+          response.status(200).json('Se actualizo una materia')
           return res;
         });
 
@@ -111,6 +103,7 @@ class ClassesController {
       const data = await pool.query('DELETE FROM materia WHERE NRC = $1;', [id], function (e, res) {
         if (e) throw e;
         console.log(res);
+        response.status(200).json('Se borro una materia')
         return res;
       })
 
