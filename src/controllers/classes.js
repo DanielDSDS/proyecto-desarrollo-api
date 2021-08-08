@@ -31,14 +31,23 @@ class ClassesController {
     }
   }
 
-  async getClassFromUserId(req, response) {
+  async getClassesFromUserId(req, response) {
     try {
       const { id } = req.params;
-      const data = await pool.query('SELECT * FROM materia WHERE  = $1;', [id], function (e, res) {
-        if (e) throw e;
-        console.log(res);
-        return res.rows;
-      });
+      const data = await pool.query(
+        `SELECT * FROM materia
+          WHERE id_carrera IN(
+            SELECT carrera.id FROM carrera 
+		          WHERE carrera.id IN(
+                SELECT usuario.id_carrera FROM usuario
+				          WHERE usuario.cedula = $1 
+              )
+          )`,
+        [id], function (e, res) {
+          if (e) throw e;
+          console.log(res);
+          return res.rows;
+        });
 
       response.status(200).json(data)
     } catch (e) {
