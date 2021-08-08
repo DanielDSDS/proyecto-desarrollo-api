@@ -16,7 +16,6 @@ CREATE TABLE  Interaccion  (
 	 cedula_delegado  INT NOT NULL,
 	 cedula_profesor  INT NOT NULL,
 	 NRC  INT NOT NULL,
-	 nombre_materia  varchar(255) NOT NULL,
 	 tipo  varchar(255) NOT NULL,
 	 hora_inicio  DATE NOT NULL,
 	 hora_fin  DATE NOT NULL,

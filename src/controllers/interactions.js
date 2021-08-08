@@ -26,6 +26,18 @@ class InteractionsController {
     }
   }
 
+  async getInteractionsFromNrc(req, response) {
+    try {
+      const { id } = req.params;
+      await pool.query('SELECT * FROM intreraccion WHERE NRC = $1;', [id], function (e, res) {
+        if (e) throw e;
+        response.status(200).json(res.rows)
+      });
+    } catch (e) {
+      response.status(400).json(e)
+    }
+  }
+
   async getInteractionsFromTeacherId(req, response) {
     try {
       const { id } = req.params;
