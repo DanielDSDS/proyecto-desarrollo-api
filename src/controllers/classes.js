@@ -17,7 +17,7 @@ class ClassesController {
   async getClass(req, response) {
     try {
       const { id } = req.params;
-      const data = await pool.query('SELECT * FROM materia WHERE NRC = $1;', [id], function (e, res) {
+      await pool.query('SELECT * FROM materia WHERE NRC = $1;', [id], function (e, res) {
         if (e) throw e;
         response.status(200).json(res.rows[0])
       });
@@ -29,7 +29,7 @@ class ClassesController {
   async getClassesFromUserId(req, response) {
     try {
       const { id } = req.params;
-      const data = await pool.query(
+      await pool.query(
         `SELECT * FROM materia
           WHERE id_carrera IN(
             SELECT carrera.id FROM carrera 
@@ -58,12 +58,11 @@ class ClassesController {
         cedulaProfesor,
         cedulaDelegado,
       } = req.body;
-      const data = await pool.query('INSERT INTO materia (NRC, id_carrera, nombre_materia, num_inscritos, num_interacciones, cedula_profesor, cedula_delegado) VALUES (DEFAULT,$2,$3,$4,$5,$6,$7);',
+      await pool.query('INSERT INTO materia (NRC, id_carrera, nombre_materia, num_inscritos, num_interacciones, cedula_profesor, cedula_delegado) VALUES (DEFAULT,$2,$3,$4,$5,$6,$7);',
         ['DEFAULT', idCarrera, nombreMateria, numInscritos, numInteracciones, cedulaProfesor, cedulaDelegado],
         function (e, res) {
           if (e) throw e;
           response.status(200).json('Se creo materia')
-          return res;
         });
 
     } catch (e) {
@@ -83,15 +82,12 @@ class ClassesController {
         cedulaProfesor,
         cedulaDelegado,
       } = req.body;
-      const data = await pool.query('UPDATE materia SET id_carrera=$1,nombre_materia=$2,num_inscritos=$3,num_interacciones=$4,cedula_profesor=$5,cedula_delegado=$6 WHERE NRC=$7',
+      await pool.query('UPDATE materia SET id_carrera=$1,nombre_materia=$2,num_inscritos=$3,num_interacciones=$4,cedula_profesor=$5,cedula_delegado=$6 WHERE NRC=$7',
         [idCarrera, nombreMateria, numInscritos, numInteracciones, cedulaProfesor, cedulaDelegado, id],
         function (e, res) {
           if (e) throw e;
           response.status(200).json('Se actualizo una materia')
-          return res;
         });
-
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -100,14 +96,11 @@ class ClassesController {
   async deleteClass(req, response) {
     try {
       const { id } = req.params;
-      const data = await pool.query('DELETE FROM materia WHERE NRC = $1;', [id], function (e, res) {
+      await pool.query('DELETE FROM materia WHERE NRC = $1;', [id], function (e, res) {
         if (e) throw e;
         console.log(res);
         response.status(200).json('Se borro una materia')
-        return res;
       })
-
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }

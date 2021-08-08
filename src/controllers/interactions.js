@@ -20,7 +20,6 @@ class InteractionsController {
       await pool.query('SELECT * FROM intreraccion WHERE id = $1;', [id], function (e, res) {
         if (e) throw e;
         response.status(200).json(res.rows[0])
-        return res.rows;
       });
     } catch (e) {
       response.status(400).json(e)
@@ -32,7 +31,6 @@ class InteractionsController {
       const { id } = req.params;
       await pool.query('SELECT * FROM intreraccion WHERE cedula_profesor = $1;', [id], function (e, res) {
         if (e) throw e;
-        console.log(res.rows);
         response.status(200).json(res.rows)
       });
     } catch (e) {
@@ -46,7 +44,6 @@ class InteractionsController {
       await pool.query('SELECT * FROM intreraccion WHERE cedula_delegado = $1;', [id], function (e, res) {
         if (e) throw e;
         response.status(200).json(res.rows)
-        return res.rows;
       });
     } catch (e) {
       response.status(400).json(e)
@@ -144,9 +141,7 @@ class InteractionsController {
       const { id } = req.params;
       const data = await pool.query('DELETE FROM interaccion WHERE id = $1;', [id], function (e, res) {
         if (e) throw e;
-        console.log(res);
         response.status(200).json('Borro una interaccion')
-        return res;
       });
       response.status(200).json(data)
     } catch (e) {

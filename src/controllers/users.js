@@ -4,12 +4,10 @@ const pool = require("../db");
 class UsersController {
   async getUsers(req, response) {
     try {
-      const data = await pool.query('SELECT * FROM usuario;', function (e, res) {
+      await pool.query('SELECT * FROM usuario;', function (e, res) {
         if (e) throw e;
-        console.log(res);
-        return res.rows;
+        response.status(200).json(res.rows)
       });
-      response.status(200).json(data)
     } catch (e) {
       response.status(400).json(e)
     }
@@ -18,9 +16,9 @@ class UsersController {
   async getUser(req, response) {
     try {
       const { id } = req.params;
-      const data = await pool.query('SELECT * FROM usuario WHERE cedula = $1;', [id], function (e, res) {
+      await pool.query('SELECT * FROM usuario WHERE cedula = $1;', [id], function (e, res) {
         if (e) throw e;
-        console.log(res);
+        response.status(200).json(res.rows)
         return res.rows;
       });
       response.status(200).json(data)

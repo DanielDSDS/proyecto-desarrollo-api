@@ -7,7 +7,6 @@ class CareerController {
     try {
       await pool.query('SELECT * FROM carrera;', function (e, res) {
         if (e) throw e;
-        console.log(res.rows);
         response.status(200).json(res.rows)
         return res.rows;
       });
@@ -21,7 +20,6 @@ class CareerController {
       const { id } = req.params;
       await pool.query('SELECT * FROM carrera WHERE id = $1;', [id], function (e, res) {
         if (e) throw e;
-        console.log(res);
         response.status(200).json(res.rows[0])
       });
     } catch (e) {
@@ -38,7 +36,6 @@ class CareerController {
         [nombreCarrera],
         function (e, res) {
           if (e) throw e;
-          console.log('Se insertaron ' + res.rows + ' campos');
           response.status(200).json('Se inserto una carrera')
         });
     } catch (e) {
@@ -56,9 +53,7 @@ class CareerController {
         [nombreCarrera, id],
         function (e, res) {
           if (e) throw e;
-          console.log('Carrera actualizada');
           response.status(200).json('Se actualizo una carrera campos')
-          return res;
         });
     } catch (e) {
       response.status(400).json(e)
@@ -70,9 +65,7 @@ class CareerController {
       const { id } = req.params;
       const data = await pool.query('DELETE FROM carrera WHERE id = $1;', [id], function (e, res) {
         if (e) throw e;
-        console.log(res);
         response.status(200).json('Borrado con exito')
-        return res;
       });
     } catch (e) {
       response.status(400).json(e)
