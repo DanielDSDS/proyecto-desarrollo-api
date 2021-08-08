@@ -6,11 +6,11 @@ const router = express.Router();
 
 router.post("/users", UsersController.createUser);
 
-// Obtener user 
+// Obtener users 
 
-router.get("/users", UsersController.getUser);
-//Obtener inusers
+router.get("/users", UsersController.getUsers);
 
+//Obtener user 
 router.get("/users/:id", UsersController.getUser);
 
 // Actualizar users  
@@ -21,4 +21,4 @@ router.put("/users/:id", UsersController.updateUser);
 
 router.delete("/users/:id", UsersController.deleteUser);
 
-exports.Users = router;
+module.exports = router;

@@ -32,7 +32,7 @@ const server = http.createServer(app);
 
 server.listen(port, (err) => {
   if (err) throw err;
-  console.log("[node] Server started at ");
+  console.log("[node] Server started at ", port);
 });
 
 server.on("close", () => {

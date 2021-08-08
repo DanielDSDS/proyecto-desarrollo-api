@@ -1,4 +1,4 @@
-const CareerController = require("../../controller/career")
+const CareerController = require("../../controllers/careers")
 const express = require("express");
 const router = express.Router();
 
@@ -23,4 +23,4 @@ router.put("/careers/:id", CareerController.updateCareer);
 
 router.delete("/careers/:id", CareerController.deleteCareer);
 
-exports.Careers = router;
+module.exports = router;

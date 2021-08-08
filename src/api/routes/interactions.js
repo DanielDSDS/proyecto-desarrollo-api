@@ -23,4 +23,4 @@ router.put("/interaction/:id", InteractionsController.updateInteraction);
 
 router.delete("/interaction/:id", InteractionsController.deleteInteraction);
 
-exports.Interactions = router;
+module.exports = router;

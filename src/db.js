@@ -1,12 +1,11 @@
-let Mysqli = require('mysqli')
+let db = require('mysql')
 
-let db = new Mysqli({
-  host: '',
-  post: 3306,
+let pool = db.createPool({
+  host: '127.0.0.1',
   user: 'root',
-  passwd: '',
-  charset: '',
-  db: ''
+  port: 3306,
+  password: 'root',
+  db: 'desarrollo'
 })
 
-export default db
+module.exports = pool;
