@@ -35,8 +35,8 @@ class CareerController {
       const {
         nombreCarrera
       } = req.body;
-      const data = await pool.query('INSERT INTO carrera (id, nombre_carrera) VALUES($1,$2);',
-        ['DEFAULT', nombreCarrera],
+      const data = await pool.query('INSERT INTO carrera (id, nombre_carrera) VALUES(DEFAULT,$1);',
+        [nombreCarrera],
         function (e, res) {
           if (e) throw e;
           console.log('Se insertaron ' + res.affectedRows + ' campos');

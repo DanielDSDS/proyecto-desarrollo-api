@@ -65,7 +65,7 @@ class ClassesController {
         cedulaProfesor,
         cedulaDelegado,
       } = req.body;
-      const data = await pool.query('INSERT INTO materia (NRC, id_carrera, nombre_materia, num_inscritos, num_interacciones, cedula_profesor, cedula_delegado) VALUES ($1,$2,$3,$4,$5,$6,$7);',
+      const data = await pool.query('INSERT INTO materia (NRC, id_carrera, nombre_materia, num_inscritos, num_interacciones, cedula_profesor, cedula_delegado) VALUES (DEFAULT,$2,$3,$4,$5,$6,$7);',
         ['DEFAULT', idCarrera, nombreMateria, numInscritos, numInteracciones, cedulaProfesor, cedulaDelegado],
         function (e, res) {
           if (e) throw e;
