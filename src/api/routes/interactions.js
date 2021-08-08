@@ -15,6 +15,10 @@ router.get("/interactions", InteractionsController.getInteractions);
 
 router.get("/interaction/:id", InteractionsController.getInteraction);
 
+//Obtener interaccion por id del profesor
+
+router.get("/interactions/teacher/:id", InteractionsController.getInteractionsFromTeacherId);
+
 // Actualizar interaccion  
 
 router.put("/interaction/:id", InteractionsController.updateInteraction);

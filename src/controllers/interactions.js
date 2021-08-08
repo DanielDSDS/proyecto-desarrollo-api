@@ -30,6 +30,20 @@ class InteractionsController {
     }
   }
 
+  async getInteractionsFromTeacherId(req, res) {
+    try {
+      const { id } = req.params;
+      const data = await pool.query('SELECT * FROM intreraccion WHERE cedula_profesor = $1;', [id], function (e, res) {
+        if (e) throw e;
+        console.log(res.rows);
+        return res.rows;
+      });
+      response.status(200).json(data)
+    } catch (e) {
+      response.status(400).json(e)
+    }
+  }
+
   async createInteraction(req, res) {
     try {
       const {

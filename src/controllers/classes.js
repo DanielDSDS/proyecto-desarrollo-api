@@ -31,6 +31,21 @@ class ClassesController {
     }
   }
 
+  async getClassFromUserId(req, response) {
+    try {
+      const { id } = req.params;
+      const data = await pool.query('SELECT * FROM materia WHERE  = $1;', [id], function (e, res) {
+        if (e) throw e;
+        console.log(res);
+        return res.rows;
+      });
+
+      response.status(200).json(data)
+    } catch (e) {
+      response.status(400).json(e)
+    }
+  }
+
   async createClass(req, response) {
     try {
       const {
